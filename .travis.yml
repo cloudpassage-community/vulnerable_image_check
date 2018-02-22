@@ -21,8 +21,8 @@ script:
 # - sudo /etc/init.d/cphalod start
 - cd test/style/
 - python test_style_flake8.py
-
-- cd ../test/unit
+- pwd
+- cd ../test/unit/
 - python test_config_helper.py
 
 env:
