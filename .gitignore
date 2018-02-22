@@ -1,0 +1,10 @@
+*.old
+*.local
+*.pyc
+.cache
+tests/public
+.coverage
+docs/build
+htmlcov
+build/
+dist/
