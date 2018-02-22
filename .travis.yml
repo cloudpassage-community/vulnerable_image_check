@@ -1,0 +1,28 @@
+language: python
+sudo: required
+python:
+- '2.7'
+cache: pip
+install:
+- pip install cloudpassage
+- pip install flake8
+# - pip install gitpython
+# - pip install json2html
+script:
+# - sudo apt-get update > /dev/null
+# - sudo apt-get -y install curl
+# - echo 'deb https://production.packages.cloudpassage.com/debian debian main' | sudo
+#  tee /etc/apt/sources.list.d/cloudpassage.list > /dev/null
+# - curl https://production.packages.cloudpassage.com/cloudpassage.packages.key | sudo
+#  apt-key add -
+# - sudo apt-get update > /dev/null
+# - sudo apt-get -y install cphalo
+# - sudo /opt/cloudpassage/bin/configure --agent-key=$HALO_AGENT_KEY
+# - sudo /etc/init.d/cphalod start
+- cd app/test/style/
+- python test_style_flake8.py
+
+env:
+  matrix:
+  - secure: tguPkWrlXvjTcRh06px5S9r5kRIlEfDsIOiaH8ntYTJe0ZEl7tKYph+lTexDiXbWmvlFa3mdGeicIPoQNh1oBaa05jNHd6Btuc7NyojEBVap5tXaqLviSHkg7866JsgaLWPmAvCLP/x74v33HuTPeBG1E2GNNodnqQSJ0fFoYHP54kONkE2mzPWkdJ9jYUE+leI7Op9FdTnULGfnDN1Cgg4FqDVAUZf2DO0whNzFbsJ4NIkxqTcWEB3ngym5plP0VJmwnhdrwGMZ8fVYp2w8LMHs6oTLZcXCcY/7xVy6HMbjWlbm3CnJpeLl0G1evkXEZQuME0uWAC8h6gswzQAN/ER4LSagb5Ey89/D264AktWMDs92pyZoMnakin+pb+/7mPiLJjM90vkEptA04R4//qv5IqjaFh2kc5ZvmQZ7ilDKRVJr0dRmjdQKQ4fxbv5LOPIxmwzrobdkclTSgUjX0qf8LMvu7ZLHSSJdJRT8b9ZFlNfMSS6VxjD/fZItAw2JVne3F/IPWQ+xyIxU0VhksN45eZ7JMUBMKz4G5RCbibee9vUwE77B9XiJ40eJJSdgmTPc2NXX0aZbcybfoHtsnNJzrmAbxKsPynyqT5XgbvLYpf9ePM3HHnqi7kK2QjENMwvzzBqoWz01aQZbyIxl3WD5+vFOUIHwTCoe1VKSayo=
+  - secure: E79/fj1BhEMmQjcmy8NfCy/PHRZLVpXw0bvi2WgKeBGiRQt0o4zJhY+s2jOwyFZWtgHeFW2jN6eoAl/YHhnQ1NILeYhMdrpoQ+zppPCqNqzcBZeQVfnjgdOrVcOMfnkxGQVmqHr09ePPhZ+xtXsTb6Hq2oD/Uwhy5fxOdWejYM9eKiLJlxpH0RxCXL/xqbXg8wwH2RkjHYrxuG/V6TZFRzyBmUu9MPvGky46fI1VBN1FJqZf32AE8/EjBMyurCe3XJ3hCsWFrYB+iQ70yxEa8smEdhZw7P+k593oBYSZANm1Idkh4Yv0O3yaToe9MCPzfRa/uKuGinrfO/WldadbseaNvwqdus6H7k7pCNkV7OnpMxobNbKCQ3q0q/mJPspsXkP1ed4nEzWXIRGWUKeJnxSUnRs+FefHbfWTxRel7gKfcV3RiDiMpTDDmVAJOuZvlcmVbOHI7jbBsFL4xd6nceL3jDhF+4TthDn0rXcHeW1A9L0tG0moQY/pB/8b61b4R/IWBibuouWpEaMrVBQtuX7UR95gqUkKUmzz6RkHv9rDO0rIPi457Svn48SaQIDKSE2twAizOi9LHSdb500GoC/wNujm1OF0BaIK/7VLQippqBpjs0pdWFS39KA11S0UCteBptKxKoRexpBOd8Q5gYGJiuzpRvF0rgOiNUVEzVM=
