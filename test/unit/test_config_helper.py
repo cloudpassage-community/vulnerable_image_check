@@ -10,7 +10,7 @@ module_name = 'config_helper'
 module_path = os.path.join(here_dir, '../../app/vulnerable_image_check/')
 sys.path.append(module_path)
 fp, pathname, description = imp.find_module(module_name)
-config = imp.load_module(module_name, fp, pathname, description)
+config_helper = imp.load_module(module_name, fp, pathname, description)
 
 
 class TestConfigHelper(unittest.TestCase):
@@ -25,12 +25,31 @@ class TestConfigHelper(unittest.TestCase):
             Test if the variable is set
         '''
 
-        # error if the configuration is not set
-        # with self.assertRaises(SystemExit):
-        config.ConfigHelper()
+        config = None
+        EXIT_CODE = "0"
 
+        # get config
+        config = config_helper.ConfigHelper()
+
+        # these are set in the .travis.yml
         self.assertNotEqual(config.halo_key, None)
         self.assertNotEqual(config.halo_secret, None)
+
+        # registry_name can be unset
+        self.assertEqual(config.registry_name, None)
+
+        # repository_name can be unset
+        self.assertEqual(config.repository_name, None)
+
+        # image tag can be unset
+        self.assertEqual(config.image_tag, None)
+
+        # ensure default is correct
+        self.assertEqual(config.exit_code, EXIT_CODE)
+
+        # check defaults
+        self.assertEqual(config.output_format, None)
+        self.assertEqual(config.octo_box, False)
 
 if __name__ == '__main__':
     unittest.main()
