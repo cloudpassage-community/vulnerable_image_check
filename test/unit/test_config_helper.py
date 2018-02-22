@@ -29,8 +29,8 @@ class TestConfigHelper(unittest.TestCase):
         # with self.assertRaises(SystemExit):
         config.ConfigHelper()
 
-        unittest.assertNotEqual(config.halo_key, None)
-        unittest.assertNotEqual(config.halo_secret, None)
+        self.assertNotEqual(config.halo_key, None)
+        self.assertNotEqual(config.halo_secret, None)
 
 if __name__ == '__main__':
     unittest.main()
