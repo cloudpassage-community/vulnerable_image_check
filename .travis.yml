@@ -19,7 +19,7 @@ script:
 # - sudo apt-get -y install cphalo
 # - sudo /opt/cloudpassage/bin/configure --agent-key=$HALO_AGENT_KEY
 # - sudo /etc/init.d/cphalod start
-- cd app/test/style/
+- cd test/style/
 - python test_style_flake8.py
 
 env:
