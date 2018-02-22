@@ -59,7 +59,7 @@ def read(fname):
     return open(os.path.join(os.path.dirname('__file__'), fname)).read()
 
 def get_version():
-    raw_init_file = read("cloudpassage/__init__.py")
+    raw_init_file = read("app/vulnerable_image_check/__init__.py")
     rx_compiled = re.compile(r"\s*__version__\s*=\s*\"(\S+)\"")
     ver = rx_compiled.search(raw_init_file).group(1)
     return ver
