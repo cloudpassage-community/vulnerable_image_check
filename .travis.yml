@@ -22,7 +22,7 @@ script:
 - cd test/style/
 - python test_style_flake8.py
 
-- cd test/unit
+- cd ../test/unit
 - python test_config_helper.py
 
 env:
