@@ -17,12 +17,13 @@ class TestConfigHelper(unittest.TestCase):
     '''
            Test the configuration
     '''
+
     def setUp(self):
         pass
 
     def test_config(self):
         '''
-            Test if the variable is set
+            Test if the config is as expected
         '''
 
         config = None

@@ -1,26 +1,21 @@
 language: python
 sudo: required
+
 python:
 - '2.7'
+
 cache: pip
+
 install:
 - pip install cloudpassage
 - pip install flake8
-# - pip install gitpython
-# - pip install json2html
+
 script:
-# - sudo apt-get update > /dev/null
-# - sudo apt-get -y install curl
-# - echo 'deb https://production.packages.cloudpassage.com/debian debian main' | sudo
-#  tee /etc/apt/sources.list.d/cloudpassage.list > /dev/null
-# - curl https://production.packages.cloudpassage.com/cloudpassage.packages.key | sudo
-#  apt-key add -
-# - sudo apt-get update > /dev/null
-# - sudo apt-get -y install cphalo
-# - sudo /opt/cloudpassage/bin/configure --agent-key=$HALO_AGENT_KEY
-# - sudo /etc/init.d/cphalod start
+# flake 8 tests
 - cd test/style/
 - python test_style_flake8.py
+
+# unit tests
 - cd ../unit/
 - python test_config_helper.py
 
