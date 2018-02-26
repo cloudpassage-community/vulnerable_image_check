@@ -18,6 +18,7 @@ script:
 # unit tests
 - cd ../unit/
 - python test_config_helper.py
+- python test_vulnerable_image_check.py Test_Vulnerable_Image_Check.test_vulnerable_image_check
 
 env:
   global:
