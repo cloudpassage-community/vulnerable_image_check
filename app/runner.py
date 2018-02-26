@@ -16,10 +16,10 @@ NEWLINE = "\n"
 config = ConfigHelper()
 
 # instantiate the vic object
-vic = VulnerableImageCheck()
+vic = VulnerableImageCheck(config)
 
 # run the scan
-vic_output = vic.vulnerable_image_check(config)
+vic_output = vic.vulnerable_image_check()
 
 # output defaults to base64
 report = base64.b64encode("\nNo vulnerabilies found in scan...\n")
