@@ -7,8 +7,9 @@ base_directory = os.path.join(code_directory, '../../app/')
 app_directory = os.path.join(code_directory,
                              '../../app/vulnerable_image_check')
 lib_directory = os.path.join(code_directory, '../../app/lib')
-style_test_directory = os.path.join(code_directory, '../../test/stle')
+style_test_directory = os.path.join(code_directory, '../../test/style')
 unit_test_directory = os.path.join(code_directory, '../../test/unit')
+
 
 def flake8_examine(file_location):
     style_guide = f8.get_style_guide()
