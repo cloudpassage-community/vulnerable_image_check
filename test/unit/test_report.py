@@ -41,8 +41,14 @@ class Test_Report(unittest.TestCase):
             Test the report output
         '''
         exit_value = 0
+        SUCCESS = 0
 
         exit_value = self.test_csv_output(exit_value)
+
+        if exit_value != SUCCESS:
+            sys.exit(exit_value)
+        else:
+            return exit_value
 
     def test_csv_output(self, exit_value):
         """
@@ -121,4 +127,4 @@ class Test_Report(unittest.TestCase):
         return exit_value
 
 if __name__ == "__main__":
-    unittest.main()
+    exit_value = unittest.main()
