@@ -19,6 +19,7 @@ script:
 - cd ../unit/
 - python test_config_helper.py
 - python test_vulnerable_image_check.py Test_Vulnerable_Image_Check.test_vulnerable_image_check
+- python test_report.py Test_Report.test_report
 
 env:
   global:
