@@ -42,19 +42,35 @@ class Test_Report(unittest.TestCase):
         '''
         exit_value = 0
         SUCCESS = 0
+        FAIL = 1
+        file_path = "/tmp/"
+        file_name = "csv_report.csv"
+        file = "%s%s" % (file_path, file_name)
 
-        exit_value = self.test_csv_output(exit_value)
+        # test valid data
+        exit_value = self.test_csv_output(exit_value, file)
 
-        if exit_value != SUCCESS:
-            sys.exit(exit_value)
-        else:
-            return exit_value
+        # test return value is successful
+        self.assertEqual(exit_value, SUCCESS)
 
-    def test_csv_output(self, exit_value):
+        #corrupt data
+        self.corrupt_data(file)
+
+        # test invalid data
+        exit_value = self.test_csv_output(exit_value, file)
+
+        # remove file
+        os.remove(file)
+
+        # test return value is failure
+        self.assertEqual(exit_value, FAIL)
+
+    def test_csv_output(self, exit_value, file):
         """
         Validates the format of the csv data
 
         :param exit_value: int
+        file: str
         :return: exit_value: int
         """
 
@@ -62,8 +78,6 @@ class Test_Report(unittest.TestCase):
         WRITE = "w"
         FAIL = 1
         COMMA = ","
-        file_path = "/tmp/"
-        file_name = "csv_report.csv"
         fields = ""
         CORRECT_NUM_FIELDS = 6
 
@@ -86,12 +100,11 @@ class Test_Report(unittest.TestCase):
         # decode the output
         csv_report = base64.b64decode(csv_report)
 
-        # write the data to a file
-        file = "%s%s" % (file_path, file_name)
-
-        fh = open(file, WRITE)
-        fh.write(csv_report)
-        fh.close()
+        # write the data to a file if it does not exist
+        if os.path.exists(file) is False:
+            fh = open(file, WRITE)
+            fh.write(csv_report)
+            fh.close()
 
         # open for reading
         fh = open(file, READ)
@@ -116,7 +129,6 @@ class Test_Report(unittest.TestCase):
 
         # close handle and remove the file
         fh.close()
-        os.remove(file)
 
         # if it is a failure then write the message
         if exit_value == FAIL:
@@ -125,6 +137,19 @@ class Test_Report(unittest.TestCase):
             print ERROR_MESSAGE
 
         return exit_value
+
+    def corrupt_data(self, file):
+        """
+        Add a non-csv line
+
+        :param file: (str) fully qualified path to file
+        """
+        APPEND = "a"
+        data = "This is not csv data ha ha ha ha"
+
+        with open(file, APPEND) as data_file:
+            data_file.write(data)
+            data_file.close()
 
 if __name__ == "__main__":
     exit_value = unittest.main()
