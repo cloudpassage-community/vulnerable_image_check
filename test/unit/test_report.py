@@ -1,8 +1,9 @@
 import csv
 import base64
-import os
-import sys
 import imp
+import os
+import re
+import sys
 import unittest
 
 # import modules
@@ -34,7 +35,17 @@ class Test_Report(unittest.TestCase):
     '''
 
     def setUp(self):
-        pass
+        # get a config and halo object
+        self.config = config_helper.ConfigHelper()
+
+        # init class object
+        self.vic = vulnerable_image_check.VulnerableImageCheck(self.config)
+
+        # run the scan
+        self.vic_output = self.vic.vulnerable_image_check()
+
+        # init class object
+        self.r = report.Report()
 
     def test_report(self):
         '''
@@ -46,8 +57,9 @@ class Test_Report(unittest.TestCase):
         file_path = "/tmp/"
         file_name = "csv_report.csv"
         file = "%s%s" % (file_path, file_name)
+        corrupt = False
 
-        # test valid data
+        # test valid csv data
         exit_value = self.test_csv_output(exit_value, file)
 
         # test return value is successful
@@ -56,13 +68,27 @@ class Test_Report(unittest.TestCase):
         #corrupt data
         self.corrupt_data(file)
 
-        # test invalid data
+        # test invalid csv data
         exit_value = self.test_csv_output(exit_value, file)
 
         # remove file
         os.remove(file)
 
         # test return value is failure
+        self.assertEqual(exit_value, FAIL)
+
+        # reset exit value default
+        exit_value = SUCCESS
+
+        # test with good data
+        exit_value = self.test_formatted_output(exit_value, corrupt)
+
+        self.assertEqual(exit_value, SUCCESS)
+
+        # test with corrupt data
+        corrupt = True
+        exit_value = self.test_formatted_output(exit_value, corrupt)
+
         self.assertEqual(exit_value, FAIL)
 
     def test_csv_output(self, exit_value, file):
@@ -81,21 +107,8 @@ class Test_Report(unittest.TestCase):
         fields = ""
         CORRECT_NUM_FIELDS = 6
 
-        # get a config and halo object
-        config = config_helper.ConfigHelper()
-
-        # init class object
-        vic = vulnerable_image_check.VulnerableImageCheck(config)
-
-        # run the scan
-        vic_output = vic.vulnerable_image_check()
-
-        # init class object
-        r = report.Report()
-
         # run the report
-        config.output_format = "csv"
-        csv_report = r.create_csv_report(vic_output)
+        csv_report = self.r.create_csv_report(self.vic_output)
 
         # decode the output
         csv_report = base64.b64decode(csv_report)
@@ -145,11 +158,64 @@ class Test_Report(unittest.TestCase):
         :param file: (str) fully qualified path to file
         """
         APPEND = "a"
-        data = "This is not csv data ha ha ha ha"
+        data = "This is not csv data ha ha ha ha (in a low evil voice)"
 
         with open(file, APPEND) as data_file:
             data_file.write(data)
             data_file.close()
+
+    def test_formatted_output(self, exit_value, corrupt):
+        """
+        Test the formatted output
+
+        :param exit_value: int
+        :param corrupt: bool
+        :return: int
+        """
+        FIRST_ELEMENT = 0
+        FAIL = 1
+        bad_data = "This data will not work"
+
+        # run the report
+        text_report = self.r.create_stdout_report(self.vic_output)
+
+        # decode the output
+        text_report = base64.b64decode(text_report)
+
+        # strip the characters to make it easier to validate an to make
+        # regex much easier
+        text_report = re.sub('[\n]', '', text_report)
+        text_report = re.sub('[-]', '', text_report)
+        text_report = re.sub('[.]', '', text_report)
+        text_report = re.sub('[:]', '', text_report)
+        text_report = re.sub('[/]', '', text_report)
+
+        # split into a list of strings
+        text_report = text_report.split("Registry")
+
+        # get rid of invalid row
+        del text_report[FIRST_ELEMENT]
+
+        # if we will test bad data
+        if corrupt is True:
+            text_report.append(bad_data)
+
+        # regex pattern
+        pattern = \
+            re.compile('\s\w+\s\sRepository\s\w+\s\s\s\sTag' \
+                       '\s\w+\s\s\s\s\s\sVulnerabilities\s\s\s\s\s\s\s\s' \
+                       'Package\s\w+\s\sPackage\sVersion\s\w+\s\|' \
+                       '\sCVE\sList\s\w+')
+
+        # check each row
+        for row in text_report:
+            match = pattern.search(row)
+
+            if not match:
+                exit_value = FAIL
+                break
+
+        return exit_value
 
 if __name__ == "__main__":
     exit_value = unittest.main()
