@@ -189,6 +189,8 @@ class Test_Report(unittest.TestCase):
         text_report = re.sub('[.]', '', text_report)
         text_report = re.sub('[:]', '', text_report)
         text_report = re.sub('[/]', '', text_report)
+        text_report = re.sub('[+]', '', text_report)
+        text_report = re.sub('[~]', '', text_report)
 
         # split into a list of strings
         text_report = text_report.split("Registry")
