@@ -40,7 +40,7 @@ if config.octo_box is True:
 else:
     print base64.b64decode(report)
 
-# get exit value which is 1 if there are vulnerabilites.  This also causes
+# get exit value which is 1 if there are vulnerabilities.  This also causes
 # a Jenkins job to fail
 exit_value = os.getenv("FAIL_ON_CRITICAL")
 exit_value = int(exit_value)
