@@ -18,6 +18,9 @@ class ConfigHelper():
         self.repository_name = os.getenv("REPO_NAME")
         self.image_tag = os.getenv("IMAGE_TAG")
         self.exit_code = os.environ["FAIL_ON_CRITICAL"] = "0"
+
+        # valid value is csv - anything other than that will output formatted
+        # text
         self.output_format = os.getenv("OUTPUT_FORMAT")
 
         # if the variable is not explicitly set the program will not run in
