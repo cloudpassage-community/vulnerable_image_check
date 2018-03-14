@@ -6,12 +6,12 @@ Overview
 
 This project will scan all the images in registries monitored by
 Halo and return a non-zero status if there are any critical vulnerabilities.  
-It is a containerized application that can be dropped in a Jenkins job, or
- used in another application or as a stand-alone project.
 
 Install
 -
-pip install vulnerable_image_check
+
+* pip install vulnerable_image_check - this will install the library.  
+* git clone - this will allow for stand-alone usage.  
 
 Use
 -
@@ -37,13 +37,20 @@ octo-box.  This means the output will be decoded base64.
 Default:
 * FAIL_ON_CRITICAL = "0" - defaults to success
 
-To build run:
+Stand-Alone Use:  
 
-docker build -t vulnerable_image_check:latest .
+1) Python - python runner.py  Note: this is configured to work with both a
+local or pip installed module
+  
+2) Docker - 
 
-To execute run:
+<t> * To build run:
 
-docker run -it -e HALO_API_KEY=$HALO_API_KEY \
+<t><t><t>docker build -t vulnerable_image_check:latest .
+
+<t> To execute run:
+
+<t><t><t>docker run -it -e HALO_API_KEY=$HALO_API_KEY \
 -e HALO_API_SECRET_KEY=$HALO_API_SECRET_KEY \
 vulnerable_image_check
 
@@ -60,27 +67,25 @@ Project Structure
 -
 
 * vulnerable_image_check - base directory  
-a) .gitchangelog.rc - configuration file for gitchangelog  
-b) .gitignore - gitignore file  
-c) .travis.yml - Travis CI configuration for CI testing  
-d) Dockerfile - Dockerfile for building a Docker image for running the 
+1) .gitchangelog.rc - configuration file for gitchangelog  
+2) .gitignore - gitignore file  
+3) .travis.yml - Travis CI configuration for CI testing  
+4) Dockerfile - Dockerfile for building a Docker image for running the 
 application stand-alone.  There are several
  packages pinned to specific versions to remediate vulnerabilities.  
-e) LICENSE - BSD 2-Clause License  
-f) README.md - README.md(README_v1)  
-g) setup.py - PyPI setup file  
-
-    * app - application directory  
+5) LICENSE - BSD 2-Clause License  
+6) README.md - README.md(README_v1)  
+7) setup.py - PyPI setup file    
+8) runner.py  
+    * vulnerable_image_check - application directory
+    1) \__init\__.py - author and version string  
+    2) config_helper.py - the application configuration  
+    3) vulnerable_image_check.py - the application  
     <t>* lib - support scripts  
     <t>1) \__init\__.py - import and version string  
     <t>2) report.py - reporting tool that outputs base64 encoded csv and 
     formatted text  
     <t>3) utility.py - used by report.py
-    <t>* vulnerable_image_check - application code directory  
-    <t>1) \__init\__.py - author and version string  
-    <t>2) config_helper.py - the application configuration  
-    <t>3) vulnerable_image_check.py - teh application
-    runner.py
     * test - test directory  
     <t>* style - style tests  
     <t>1) test_style_flake8.py - flake8 tests  
