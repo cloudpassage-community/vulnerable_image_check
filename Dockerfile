@@ -7,10 +7,12 @@ RUN apt-get update -y && \
     sensible-utils=0.0.9ubuntu0.16.04.1 \
     isc-dhcp-client=4.3.3-5ubuntu12.9
 
-RUN mkdir /app
+RUN mkdir /vulnerable_image_check
 
-COPY app/ /app/
+COPY runner.py /
 
-WORKDIR /app/
+COPY vulnerable_image_check/ /vulnerable_image_check/
+
+WORKDIR /
 
 CMD ["/usr/bin/python", "runner.py"]
