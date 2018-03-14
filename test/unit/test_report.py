@@ -10,20 +10,20 @@ import unittest
 here_dir = os.path.dirname(os.path.abspath(__file__))
 
 module_name = 'config_helper'
-module_path = os.path.join(here_dir, '../../app/vulnerable_image_check/')
+module_path = os.path.join(here_dir, '../../vulnerable_image_check/')
 sys.path.append(module_path)
 fp, pathname, description = imp.find_module(module_name)
 config_helper = imp.load_module(module_name, fp, pathname, description)
 
 module_name = 'vulnerable_image_check'
-module_path = os.path.join(here_dir, '../../app/vulnerable_image_check/')
+module_path = os.path.join(here_dir, '../../vulnerable_image_check/')
 sys.path.append(module_path)
 fp, pathname, description = imp.find_module(module_name)
 vulnerable_image_check = \
     imp.load_module(module_name, fp, pathname, description)
 
 module_name = 'report'
-module_path = os.path.join(here_dir, '../../app/lib/')
+module_path = os.path.join(here_dir, '../../vulnerable_image_check/lib/')
 sys.path.append(module_path)
 fp, pathname, description = imp.find_module(module_name)
 report = \

@@ -3,10 +3,11 @@ from flake8.api import legacy as f8
 import re
 
 code_directory = os.path.abspath(os.path.dirname(__file__))
-base_directory = os.path.join(code_directory, '../../app/')
+base_directory = os.path.join(code_directory, '../../vulnerable_image_check')
 app_directory = os.path.join(code_directory,
-                             '../../app/vulnerable_image_check')
-lib_directory = os.path.join(code_directory, '../../app/lib')
+                             '../../vulnerable_image_check')
+lib_directory = \
+    os.path.join(code_directory, '../../vulnerable_image_check/lib')
 style_test_directory = os.path.join(code_directory, '../../test/style')
 unit_test_directory = os.path.join(code_directory, '../../test/unit')
 
