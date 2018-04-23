@@ -152,9 +152,14 @@ class Report(object):
             "  Repository: {repository}" \
             "".format(repository=vic_data["image"]["repository"]["name"])
 
-        tag = \
-            "    Tag: {tag}" \
-            "".format(tag=vic_data["image"]["tag"])
+        tags = ""
+        for tag in vic_data["image"]["tags"]:
+            tags += tag
+            tags += " "
+
+        tag_list = \
+            "    Tag(s): {tag_list}".format(tag_list=tags)
+
 
         vulnerabilities = "      Vulnerabilities:"  # NOQA
 
@@ -176,7 +181,8 @@ class Report(object):
         package += cve_list
 
         # order the fields and separate them by a newline
-        ordered_fields = [registry, repository, tag, vulnerabilities, package]
+        ordered_fields = [registry, repository, tag_list,
+                          vulnerabilities, package]
 
         # return formatted report data
         return "\n".join(ordered_fields)
@@ -192,9 +198,19 @@ class Report(object):
             result - (dict) - vulnerability report data
         """
 
+        number_tags = len(vic_data["image"]["tags"])
+        counter = 0
+        tags = ""
+        increment = 1
+
+        while counter < number_tags:
+            tags += vic_data["image"]["tags"][counter]
+            tags += " "
+            counter = counter + increment
+
         result = {"registry": vic_data["image"]["registry"]["name"],
                   "repository": vic_data["image"]["repository"]["name"],
-                  "tag": vic_data["image"]["tag"],
+                  "tag": tags,
                   "package": vic_data["name"],
                   "image_digest": vic_data["image"]["image_sha"],
                   "version": vic_data["version"]}

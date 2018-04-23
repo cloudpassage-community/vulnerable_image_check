@@ -204,8 +204,8 @@ class Test_Report(unittest.TestCase):
 
         # regex pattern
         pattern = \
-            re.compile('\s\w+\s\sRepository\s\w+\s\s\s\sTag' \
-                       '\s\w+\s\s\s\s\s\sVulnerabilities\s\s\s\s\s\s\s\s' \
+            re.compile('\s\w+\s\sRepository\s\w+\s\s\s\sTag\(s\)' \
+                       '\s[\w+\s]+\s\s\s\s\s\sVulnerabilities\s\s\s\s\s\s\s\s' \
                        'Package\s\w+\s\sPackage\sVersion\s\w+\s\|' \
                        '\sCVE\sList\s\w+')
 
