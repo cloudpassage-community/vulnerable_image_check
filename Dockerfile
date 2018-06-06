@@ -6,7 +6,9 @@ RUN apt-get update -y && \
     systemd=229-4ubuntu21.2 \
     sensible-utils=0.0.9ubuntu0.16.04.1 \
     isc-dhcp-client=4.3.3-5ubuntu12.9 \
-    libssl1.0.0:amd64=1.0.2g-1ubuntu4.12
+    libssl1.0.0:amd64=1.0.2g-1ubuntu4.12 \
+    procps=2:3.3.10-4ubuntu2.4 \
+    libprocps4=2:3.3.10-4ubuntu2.4
 
 RUN mkdir /vulnerable_image_check
 
