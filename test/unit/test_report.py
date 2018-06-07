@@ -205,13 +205,15 @@ class Test_Report(unittest.TestCase):
         # regex pattern
         pattern = \
             re.compile('\s\w+\s\sRepository\s\w+\s\s\s\sTag\(s\)' \
-                       '\s[\w+\s]+\s\s\s\s\s\sVulnerabilities\s\s\s\s\s\s\s\s' \
+                       '\s[\w*\s*]+\s*Vulnerabilities\s\s\s\s\s\s\s\s' \
                        'Package\s\w+\s\sPackage\sVersion\s\w+\s\|' \
                        '\sCVE\sList\s\w+')
 
         # check each row
         for row in text_report:
             match = pattern.search(row)
+
+            print row
 
             if not match:
                 exit_value = FAIL
